@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api", // remove /auth
+  baseURL: "https://gym-pro-jz9w.onrender.com/", // remove /auth
 });
 
 // Add token to headers if available
