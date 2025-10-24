@@ -11,12 +11,24 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",           // local dev
-      "https://g-ym-pro.vercel.app"      // your deployed frontend
+      "https://g-ym-pro.vercel.app"      // deployed frontend
     ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
+
+// ✅ Handle preflight (OPTIONS) requests globally
+app.options("*", cors());
+
+// ✅ Optional fallback headers (good for Render)
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://g-ym-pro.vercel.app");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  next();
+});
 
 // Middleware
 app.use(express.json());
