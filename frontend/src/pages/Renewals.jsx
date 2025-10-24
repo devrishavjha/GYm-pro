@@ -29,7 +29,7 @@ const Renewals = () => {
   }, []);
 
   return (
-    <div className="p-6">
+    <div className="p-6 relative">
       <h1 className="text-3xl font-bold mb-6 text-center">Renewals</h1>
 
       {error && <p className="text-red-500 mb-4">{error}</p>}
@@ -66,16 +66,28 @@ const Renewals = () => {
         </div>
       )}
 
+      {/* Modal */}
       {selectedMember && (
-        <RenewForm
-          member={selectedMember}
-          onClose={() => setSelectedMember(null)}
-          fetchMembers={fetchMembers}
-        />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+          <div className="bg-white rounded-xl p-6 w-full max-w-md shadow-lg relative">
+            {/* Close button */}
+            <button
+              onClick={() => setSelectedMember(null)}
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-xl font-bold"
+            >
+              &times;
+            </button>
+
+            <RenewForm
+              member={selectedMember}
+              onClose={() => setSelectedMember(null)}
+              fetchMembers={fetchMembers}
+            />
+          </div>
+        </div>
       )}
     </div>
   );
 };
 
 export default Renewals;
-
